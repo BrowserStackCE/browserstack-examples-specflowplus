@@ -9,6 +9,17 @@
 *.user
 *.userosscache
 *.sln.docstates
+packages/
+.vs
+bin
+obj
+*.user
+*.html
+*.txt
+*.xml
+*.feature.cs
+*.suo
+TestResults
 
 # Mac
 .DS_Store
