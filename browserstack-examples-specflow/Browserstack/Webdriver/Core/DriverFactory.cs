@@ -20,7 +20,7 @@ namespace BrowserStack.WebDriver.Core
         private readonly string BROWSERSTACK_USERNAME = "BROWSERSTACK_USERNAME";
         private readonly string BROWSERSTACK_ACCESS_KEY = "BROWSERSTACK_ACCESS_KEY";
         private readonly string BUILD_ID = "BROWSERSTACK_BUILD_NAME";
-        private readonly string DEFAULT_BUILD_NAME = "browserstack-examples-appium_nunit";
+        private readonly string DEFAULT_BUILD_NAME = "browserstack_examples_specflow";
         public readonly string CAPABILITIES_DIR = "/Browserstack/Webdriver/Resources/";
         private readonly WebDriverConfiguration WebDriverConfiguration;
         private readonly string DefaultBuildSuffix;
@@ -84,7 +84,7 @@ namespace BrowserStack.WebDriver.Core
             }
 
             //WebDriverConfiguration webDriverConfiguration = deserializer.Deserialize<WebDriverConfiguration>(File.ReadAllText(Directory.GetCurrentDirectory() + CAPABILITIES_DIR + capabilitiesConfig));
-            WebDriverConfiguration webDriverConfiguration = deserializer.Deserialize<WebDriverConfiguration>(File.ReadAllText("/Users/mayankmaurya/Desktop/webdriverFramework-specflow/browserstack-examples-specflow/browserstack-examples-specflow/" + CAPABILITIES_DIR + capabilitiesConfig));
+            WebDriverConfiguration webDriverConfiguration = deserializer.Deserialize<WebDriverConfiguration>(File.ReadAllText(Directory.GetCurrentDirectory() + "../../bin/Debug/netcoreapp3.1/" + CAPABILITIES_DIR + capabilitiesConfig));
 
             return webDriverConfiguration;
         }

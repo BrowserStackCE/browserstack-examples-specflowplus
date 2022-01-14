@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>browserstack_examples_appium_nunit</RootNamespace>
+    <RootNamespace>browserstack_examples_specflow</RootNamespace>
     <LangVersion>9.0</LangVersion>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -28,9 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Browserstack\Webdriver\Resources\**">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        <LinkBase>resources</LinkBase>
+    <Content Include="Browserstack\Webdriver\Resources\*.*">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <!--<LinkBase>resources</LinkBase>-->
     </Content>
 </ItemGroup>
   <ItemGroup>
