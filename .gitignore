@@ -9,3 +9,4 @@ obj
 *.feature.cs
 *.suo
 TestResults
+**/.DS_Store
