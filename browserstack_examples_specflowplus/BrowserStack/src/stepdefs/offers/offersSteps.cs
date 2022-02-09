@@ -4,30 +4,29 @@ using System;
 using BrowserStack.App;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Chrome;
-using SeleniumExtras.WaitHelpers;
+//using SeleniumExtras.WaitHelpers;
 using NUnit.Framework;
-using OpenQA.Selenium.Remote;
+using SpecflowBrowserStack.src.stepdefs;
 
 namespace SpecflowBrowserStack.Steps
 {
     [Binding]
-    [TestFixtureSource(typeof(WebDriverTestRunner))]
-    public class offersSteps : WebDriverTestRunner
+    public class offersSteps
     {
         private readonly IWebDriver _driver;
         private static bool result;
         WebDriverWait wait;
 
-        public offersSteps(DesiredCapabilities driverOptions)
+        public offersSteps(ChromeOptions driverOptions)
         {
-            _driver = GetDriver(driverOptions);
-            wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            _driver = Hooks.threadLocalDriver.Value;
+            wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
         }
 
         [Given(@"I navigate to website with mumbai geo-location")]
         public void GivenINavigateToWebsiteWithMumbaiGeo_Location()
         {
-            _driver.Navigate().GoToUrl("http://localhost:3000/");
+            _driver.Navigate().GoToUrl("https://bstackdemo.com/");
             ((IJavaScriptExecutor)_driver).ExecuteScript("window.navigator.geolocation.getCurrentPosition = function(cb){cb({ coords: {accuracy: 20,altitude: null,altitudeAccuracy: null,heading: null,latitude: 19.043192,longitude: 75.86305240000002,speed: null}}); }");
         }
 

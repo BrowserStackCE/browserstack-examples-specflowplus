@@ -4,26 +4,24 @@ using OpenQA.Selenium;
 using BrowserStack.App;
 using OpenQA.Selenium.Support.UI;
 using System;
-using SeleniumExtras.WaitHelpers;
+//using SeleniumExtras.WaitHelpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Remote;
+using SpecflowBrowserStack.src.stepdefs;
 
 namespace SpecflowBrowserStack.Steps
 {
-    [Binding]
-	[TestFixtureSource(typeof(WebDriverTestRunner))]
+	[Binding]
 	public class loginSteps : WebDriverTestRunner
 	{
 		private readonly IWebDriver _driver;
 		private static bool result;
 		WebDriverWait wait;
 
-		public loginSteps(DesiredCapabilities driverOptions)
+		public loginSteps()
 		{
-			_driver = GetDriver(driverOptions);
-			 wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-			
+			_driver = Hooks.threadLocalDriver.Value;
+			wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
 		}
 
 		[Given(@"I navigate to website")]
@@ -64,14 +62,14 @@ namespace SpecflowBrowserStack.Steps
 			{
 				wait.Until(ExpectedConditions.ElementExists(By.XPath("//h3[@class='api-error']")));
 				string errorMsg = _driver.FindElement(By.XPath("//h3[@class='api-error']")).Text;
-				result = Assert.Equals(errorMsg, "Your account has been locked.");
+				Assert.AreEqual(errorMsg, "Your account has been locked.");
 
 			}
 			else
 			{
 				wait.Until(ExpectedConditions.ElementExists(By.XPath("//span[@class='username']")));
 				string displayedUsername = _driver.FindElement(By.XPath("//span[@class='username']")).Text;
-				result = Assert.Equals(username, displayedUsername);
+			    Assert.AreEqual(username, displayedUsername);
 
 			}
 		}

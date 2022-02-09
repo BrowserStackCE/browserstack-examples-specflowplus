@@ -5,21 +5,20 @@ using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Chrome;
 using BrowserStack.App;
 using NUnit.Framework;
-using OpenQA.Selenium.Remote;
+using SpecflowBrowserStack.src.stepdefs;
 
 namespace SpecflowBrowserStack.Steps
 {
     [Binding]
-    [TestFixtureSource(typeof(WebDriverTestRunner))]
-    public class userSteps : WebDriverTestRunner
+    public class userSteps
     {
         private readonly IWebDriver _driver;
         private static bool result;
         WebDriverWait wait;
-        public userSteps(DesiredCapabilities driverOptions)
+        public userSteps(ChromeOptions driverOptions)
         {
-            _driver = GetDriver(driverOptions);
-            wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            _driver = Hooks.threadLocalDriver.Value;
+            wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
         }
 
         [Then(@"I should see no image loaded")]

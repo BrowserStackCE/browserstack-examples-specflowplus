@@ -7,6 +7,7 @@ using Platform = BrowserStack.WebDriver.Config.Platform;
 using log4net;
 using System.Linq;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 
 namespace BrowserStack.WebDriver.Core
@@ -87,9 +88,9 @@ namespace BrowserStack.WebDriver.Core
 
             return webDriverConfiguration;
         }
-        public DesiredCapabilities CreateWebPlatformCapabilities(Platform platform)
+        public DriverOptions CreateWebPlatformCapabilities(Platform platform)
         {
-            DesiredCapabilities webDriverOptions = null;
+            DriverOptions webDriverOptions = null;
 
             switch (this.WebDriverConfiguration.DriverType)
             {
@@ -113,13 +114,12 @@ namespace BrowserStack.WebDriver.Core
         {
             return this.WebDriverConfiguration.GetActivePlatforms();
         }
-
-        public DesiredCapabilities CreateRemoteWebCapabilities(Platform platform)
+        public ChromeOptions CreateRemoteWebCapabilities(Platform platform)
         {
             RemoteDriverConfig remoteDriverConfig = this.WebDriverConfiguration.CloudDriverConfig;
             Capabilities commonCapabilities = remoteDriverConfig.CommonCapabilities;
             Capabilities sessionCapabilities = platform.SessionCapabilities;
-            DesiredCapabilities webDriverOptions = new DesiredCapabilities();
+            ChromeOptions webDriverOptions = new();
             Dictionary<string, object> browserstackOptions = new();
 
             if (commonCapabilities.BStackOptions != null)
@@ -136,7 +136,7 @@ namespace BrowserStack.WebDriver.Core
             {
                 foreach (KeyValuePair<string, object> tuple in commonCapabilities.PlatformOptions)
                 {
-                    webDriverOptions.SetCapability(tuple.Key.ToString(), tuple.Value);
+                    webDriverOptions.AddAdditionalOption(tuple.Key.ToString(), tuple.Value);
                 }
             }
 
@@ -152,7 +152,7 @@ namespace BrowserStack.WebDriver.Core
             {
                 foreach (KeyValuePair<string, object> tuple in sessionCapabilities.PlatformOptions)
                 {
-                    webDriverOptions.SetCapability(tuple.Key.ToString(), tuple.Value);
+                    webDriverOptions.AddAdditionalOption(tuple.Key.ToString(), tuple.Value);
                 }
             }
 
@@ -175,14 +175,12 @@ namespace BrowserStack.WebDriver.Core
                 browserstackOptions["buildName"] = CreateBuildName(build.ToString());
             }
 
-            webDriverOptions.SetCapability("bstack:options", browserstackOptions);
-
-            Console.WriteLine(webDriverOptions);
+            webDriverOptions.AddAdditionalOption("bstack:options", browserstackOptions);
 
             return webDriverOptions;
         }
 
-        public IWebDriver CreateRemoteWebDriver(DesiredCapabilities driverOptions)
+        public IWebDriver CreateRemoteWebDriver(DriverOptions driverOptions)
         {
             IWebDriver driver;
             //object Os = driverOptions.ToCapabilities().GetCapability("platformName");
@@ -218,13 +216,13 @@ namespace BrowserStack.WebDriver.Core
             return String.Format("{0}-{1}", buildName, buildSuffix);
         }
 
-        private DesiredCapabilities CreateOnPremGridWebDriver(Platform platform)
+        private DriverOptions CreateOnPremGridWebDriver(Platform platform)
         {
 
             throw new NotImplementedException("On Prem Grid IWebDriver driver is not yet implemented");
         }
 
-        private DesiredCapabilities CreateOnPremWebCapabilities(Platform platform)
+        private DriverOptions CreateOnPremWebCapabilities(Platform platform)
         {
 
             throw new NotImplementedException("On Prem IWebDriver driver is not yet implemented");

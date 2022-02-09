@@ -1,8 +1,8 @@
 ﻿DriverType: CloudDriver
 CloudDriverConfig:
   HubUrl: https://hub-cloud.browserstack.com/wd/hub
-  User: BROWSERSTACK_USERNAME
-  Key: BROWSERSTACK_ACCESS_KEY
+  User:
+  Key:
   LocalTunnel:
     IsEnabled: false
   CommonCapabilities:
@@ -12,9 +12,9 @@ CloudDriverConfig:
       debug: true
       networkLogs: true
       os: Windows
-      osVersion: "11"
+      osVersion: "11" 
   Platforms:
     - SessionCapabilities:
-        PlatformOptions:
-          browserVersion: latest
-          browserName: Chrome
+        PlatformOptions: 
+          BrowserVersion: latest
+             
