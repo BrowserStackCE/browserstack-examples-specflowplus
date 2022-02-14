@@ -1,4 +1,4 @@
-@Parallel
+@single @e2e
 Feature: e2e Feature
 
   Scenario: End to End Scenario

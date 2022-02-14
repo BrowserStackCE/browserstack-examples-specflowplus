@@ -1,4 +1,4 @@
-@Single
+@login
 Feature: Login Feature
 
   Scenario Outline: Login as <username>

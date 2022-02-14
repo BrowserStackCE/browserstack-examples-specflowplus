@@ -1,4 +1,4 @@
-
+@product
 Feature: Product Feature
 @Local_Parallel
   Scenario: Apply Apple Vendor Filter

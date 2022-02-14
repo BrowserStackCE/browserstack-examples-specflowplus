@@ -1,11 +1,11 @@
 ﻿DriverType: CloudDriver
-BaseUrl: https://bstackdemo.com
+BaseUrl: http://localhost:3000
 CloudDriverConfig:
   HubUrl: https://hub-cloud.browserstack.com/wd/hub
   User:
   Key:
   LocalTunnel:
-    IsEnabled: false
+    IsEnabled: true
   CommonCapabilities:
     BStackOptions:
       projectName: BrowserStack Examples Specflow
@@ -13,7 +13,8 @@ CloudDriverConfig:
       debug: true
       networkLogs: true
       os: Windows
-      osVersion: "11" 
+      osVersion: "11"
+      local: true
   Platforms:
     - SessionCapabilities:
         PlatformOptions: 

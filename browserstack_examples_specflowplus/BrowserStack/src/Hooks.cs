@@ -21,140 +21,134 @@ using OpenQA.Selenium.Chrome;
 
 namespace SpecflowBrowserStack.src.stepdefs
 {
-    [Binding]
-    public class Hooks
-    { 
-        private static FeatureContext _featureContext;
-        private static ScenarioContext _scenarioContext;
+	[Binding]
+	public class Hooks
+	{
+		private static FeatureContext _featureContext;
+		private static ScenarioContext _scenarioContext;
 
-        public static ThreadLocal<IWebDriver> threadLocalDriver = new ThreadLocal<IWebDriver>();
-        //protected IWebDriver driver;
-        private static readonly ILog log = LogManager.GetLogger(typeof(Hooks));
+		public static ThreadLocal<IWebDriver> threadLocalDriver = new ThreadLocal<IWebDriver>();
+		//protected IWebDriver driver;
+		private static readonly ILog log = LogManager.GetLogger(typeof(Hooks));
 
-        public static DriverOptions GetWebDriverObject()
-        {
+		public static DriverOptions GetWebDriverObject()
+		{
 
-            DriverFactory webDriverFactory = DriverFactory.GetInstance();
-            List<BrowserStack.WebDriver.Config.Platform> list;
-            list = webDriverFactory.GetPlatforms();
-            DriverOptions fixtureArgs = null;
-            foreach (BrowserStack.WebDriver.Config.Platform platform in list)
-            {
-                fixtureArgs = webDriverFactory.CreateRemoteWebCapabilities(platform);
-                log.Info(("Initialising driver with capabilities : {}", fixtureArgs));
+			DriverFactory webDriverFactory = DriverFactory.GetInstance();
+			List<BrowserStack.WebDriver.Config.Platform> list;
+			list = webDriverFactory.GetPlatforms();
+			DriverOptions fixtureArgs = null;
+			foreach (BrowserStack.WebDriver.Config.Platform platform in list)
+			{
+				fixtureArgs = webDriverFactory.CreateRemoteWebCapabilities(platform);
+				log.Info(("Initialising driver with capabilities : {}", fixtureArgs));
 
-            }
+			}
 
-            return fixtureArgs;
-        }
+			return fixtureArgs;
+		}
 
-        public Hooks( FeatureContext featureContext, ScenarioContext scenarioContext)
-        {
-            _featureContext = featureContext;
-            _scenarioContext = scenarioContext;
-        }
+		public Hooks(FeatureContext featureContext, ScenarioContext scenarioContext)
+		{
+			_featureContext = featureContext;
+			_scenarioContext = scenarioContext;
+		}
 
-        [BeforeTestRun]
-        public static void InitializeReport()
-        {
-            Console.WriteLine("Hello World");
-            //Initialize Extent report before test starts
-           
-        }
+		[BeforeTestRun]
+		public static void InitializeReport()
+		{
+			//Initialize Extent report before test starts
 
-        [AfterTestRun]
-        public static void TearDownReport()
-        {
-            //Flush report once test completes
-        
-        }
+		}
 
-        [BeforeFeature]
-        public static void BeforeFeature(FeatureContext featureContext)
-        {
-            //Create dynamic feature name
-            
-        }
+		[AfterTestRun]
+		public static void TearDownReport()
+		{
+			//Flush report once test completes
 
-        [AfterStep]
-        public void InsertReportingSteps()
-        {
-            // use for after hooks
-        }
+		}
 
+		[BeforeFeature]
+		public static void BeforeFeature(FeatureContext featureContext)
+		{
+			//Create dynamic feature name
 
-        [BeforeScenario]
-        public static void Initialize(ScenarioContext scenarioContext)
-        {
-            Console.WriteLine("Hello World");
+		}
 
-            GetDriver(GetWebDriverObject());
-
-            SetTestName(scenarioContext.ScenarioInfo.Title);
-            //Create dynamic scenario name
-
-        }
+		[AfterStep]
+		public void InsertReportingSteps()
+		{
+			// use for after hooks
+		}
 
 
-        [AfterScenario]
-        public static void TearDown(ScenarioContext scenarioContext)
-        {
-            try
-            {
-                MarkTestStatus();
-            }
-            catch
-            {
+		[BeforeScenario]
+		public static void Initialize(ScenarioContext scenarioContext)
+		{
 
-            }
-            finally
-            {
-                Shutdown();
-            }
-            Console.WriteLine("Hello World");
+			GetDriver(GetWebDriverObject());
 
-           
-            //Create dynamic scenario name
+			SetTestName(scenarioContext.ScenarioInfo.Title);
+			//Create dynamic scenario name
 
-        }
-
-        protected static void SetTestName(String name)
-        {
-            ((IJavaScriptExecutor)threadLocalDriver.Value).ExecuteScript("browserstack_executor: {\"action\": \"setSessionName\", \"arguments\": {\"name\":\"" + name + "\" }}");
-        }
-
-        protected static void MarkTestStatus()
-        {
-            if (TestContext.CurrentContext.Result.FailCount == 0)
-            {
-                ((IJavaScriptExecutor)threadLocalDriver.Value).ExecuteScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\":\"passed\", \"reason\": \"All " + TestContext.CurrentContext.Result.PassCount + " test(s) completed successfully.\"}}");
-            }
-            else
-            {
-                String errorMsg = TestContext.CurrentContext.Result.Message + ". Failed: " + TestContext.CurrentContext.Result.FailCount +
-                    ", Passed: " + TestContext.CurrentContext.Result.PassCount +
-                    ".".Substring(0, 255);
-                ((IJavaScriptExecutor)threadLocalDriver.Value).ExecuteScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\":\"failed\", \"reason\": \"" + errorMsg + " \"}}");
-            }
-        }
-
-        protected static void Shutdown()
-        {
-            if (threadLocalDriver.IsValueCreated)
-            {
-                threadLocalDriver.Value.Quit();
-            }
-
-        }
-
-        protected static IWebDriver GetDriver(DriverOptions driverOptions)
-        {
-                DriverFactory webDriverFactory = DriverFactory.GetInstance();
-                threadLocalDriver.Value = webDriverFactory.CreateRemoteWebDriver(driverOptions);
+		}
 
 
-            return threadLocalDriver.Value;
-        }
-    }
+		[AfterScenario]
+		public static void TearDown(ScenarioContext scenarioContext)
+		{
+			try
+			{
+				MarkTestStatus();
+			}
+			catch
+			{
+
+			}
+			finally
+			{
+				Shutdown();
+			}
+
+
+			//Create dynamic scenario name
+
+		}
+
+		protected static void SetTestName(String name)
+		{
+			((IJavaScriptExecutor)threadLocalDriver.Value).ExecuteScript("browserstack_executor: {\"action\": \"setSessionName\", \"arguments\": {\"name\":\"" + name + "\" }}");
+		}
+
+		protected static void MarkTestStatus()
+		{
+			if (TestContext.CurrentContext.Result.FailCount == 0)
+			{
+				((IJavaScriptExecutor)threadLocalDriver.Value).ExecuteScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\":\"passed\", \"reason\": \"All " + TestContext.CurrentContext.Result.PassCount + " test(s) completed successfully.\"}}");
+			}
+			else
+			{
+				((IJavaScriptExecutor)threadLocalDriver.Value).ExecuteScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\":\"failed\", \"reason\": \"Atleast 1 assertion failed\"}}");
+			}
+		}
+
+		protected static void Shutdown()
+		{
+			if (threadLocalDriver.IsValueCreated)
+			{
+				threadLocalDriver.Value.Quit();
+			}
+
+		}
+
+		protected static IWebDriver GetDriver(DriverOptions driverOptions)
+		{
+			DriverFactory webDriverFactory = DriverFactory.GetInstance();
+			threadLocalDriver.Value = webDriverFactory.CreateRemoteWebDriver(driverOptions);
+
+
+			return threadLocalDriver.Value;
+		}
+	}
 }
 

@@ -2,6 +2,7 @@ using TechTalk.SpecFlow;
 //using SpecflowBrowserStack.Drivers;
 using OpenQA.Selenium;
 using BrowserStack.App;
+using BrowserStack.WebDriver.Core;
 using OpenQA.Selenium.Support.UI;
 using System;
 //using SeleniumExtras.WaitHelpers;
@@ -27,9 +28,9 @@ namespace SpecflowBrowserStack.Steps
 		[Given(@"I navigate to website")]
 		public void GivenINavigatedTowebsite()
 		{
-			_driver.Navigate().GoToUrl("https://bstackdemo.com/");
-        }
-		
+			_driver.Navigate().GoToUrl(DriverFactory.GetInstance().GetBaseUrl());
+		}
+
 		[Then(@"I click on Sign In link")]
 		public void ThenIClickOnSignInLink()
 		{
@@ -69,7 +70,7 @@ namespace SpecflowBrowserStack.Steps
 			{
 				wait.Until(ExpectedConditions.ElementExists(By.XPath("//span[@class='username']")));
 				string displayedUsername = _driver.FindElement(By.XPath("//span[@class='username']")).Text;
-			    Assert.AreEqual(username, displayedUsername);
+				Assert.AreEqual(username, displayedUsername);
 
 			}
 		}
