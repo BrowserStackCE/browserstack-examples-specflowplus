@@ -45,9 +45,9 @@ This repository contains the following #{ Selenium test} tests:
 
 ## Test infrastructure environments
 
--   [ON_PREM](#on-premise-self-hosted)
--   [DOCKER](#docker)
--   [default/null/""](#browserstack)
+-   [On Prem](#on-premise-self-hosted)
+-   [Docker](#docker)
+-   [BrowserStack](#browserstack)
 
 ---
 
@@ -57,7 +57,7 @@ This infrastructure points to running the tests on your own machine using a brow
 
 ## Prerequisites
 
--   For this infrastructure configuration (i.e on-premise), ensure that the ChromeDriver executable is placed in the `SpecflowBrowserStack/Drivers/OnPremDriver/` folder.
+-   For this infrastructure configuration (i.e on-premise), ensure that the ChromeDriver executable is available in the path.
 -   ChromeDriver can be downloaded from https://chromedriver.chromium.org/downloads
 
 Note: The ChromeDriver version must match the Chrome browser version on your machine.
@@ -73,25 +73,26 @@ Note: The ChromeDriver version must match the Chrome browser version on your mac
     .Net Core:
 
     ```
-    set TEST_INFRA=ON_PREM
-    dotnet test --filter "TestCategory=Single"
+    set CAPABILITIES_FILENAME=capabilities-driver.yml
+    dotnet test --filter Category=single
     ```
-
-    To run a specific test scenario use the filter tagged to that feature file.
-
-    .Net Core:
-
-    ```
-    dotnet test --filter "TestCategory=<Tag>"
-    ```
-
-    where, the argument 'Tag' can be any profile configured with filters in feature files for this repository.
-
-    E.g. "Single", "Local".
 
 -   Output
 
     This run profile executes a specific test scenario on a single browser instance on your own machine.
+
+-   To run a specific test scenario use the filter tagged to that feature file.
+
+    .Net Core:
+
+    ```
+    set CAPABILITIES_FILENAME=capabilities-driver.yml
+    dotnet test --filter Category=<tag>
+    ```
+
+    where, the argument 'Tag' can be any profile configured with filters in feature files for this repository.
+
+    E.g. "single", "e2e", "login", "offers", "product" and "user"
 
 -   Output
 
@@ -126,39 +127,36 @@ Note: The ChromeDriver version must match the Chrome browser version on your mac
     .Net Core:
 
     ```
-    set TEST_INFRA=DOCKER
-    dotnet test --filter "TestCategory=Single"
+    set CAPABILITIES_FILENAME=capabilities-driver.yml
+    dotnet test --filter Category=single
     ```
 
-    To run a specific test scenario use the filter tagged to that feature file.
+-   Output
+
+    This run profile executes a specific test scenario on a single browser instance on your personal selenium grid.
+
+-   To run a specific test scenario use the filter tagged to that feature file.
 
     .Net Core:
 
     ```
-    dotnet test --filter "TestCategory=<Tag>"
+    set CAPABILITIES_FILENAME=capabilities-driver.yml
+    dotnet test --filter Category=<Tag>
     ```
 
     where, the argument 'Tag' can be any profile configured with filters in feature files for this repository.
 
-    E.g. "Single", "Local".
+    E.g. "single", "e2e", "login", "user", "offers" and "product"
 
 -   Output
 
-    This run profile executes a specific test scenario on a single browser instance on your own machine.
-
--   Output
-
-    This run profile executes the test Feature file sequentially on a single browser, on your own machine.
+    This run profile executes the test Feature file sequentially on a single browser, on your personal selenium grid.
 
     -   After tests are complete, you can stop the Docker by running the following command:
 
     ```
     docker-compose down
     ```
-
--   Output
-
-    This run profile executes a specific test scenario on a single browser deployed on a docker image.
 
 ---
 
@@ -185,42 +183,55 @@ Note: The ChromeDriver version must match the Chrome browser version on your mac
     set BROWSERSTACK_ACCESS_KEY=<browserstack-access-key>
     ```
 
-    Alternatively, you can also hardcode username and access_key objects in the [conf.json](SpecflowBrowserStack\conf.json) file.
+    Alternatively, you can also hardcode username and access_key objects in the [capabilities.yml](browserstack_examples_specflowplus/BrowserStack/Webdriver/Resources/capabilities.yml) file.
 
 Note:
 
--   We have configured a list of test capabilities in the [conf.json](SpecflowBrowserStack\conf.json) file. You can certainly update them based on your device / browser test requirements.
 -   The exact test capability values can be easily identified using the [Browserstack Capability Generator](https://browserstack.com/automate/capabilities)
 
 ## Running Your Tests
 
 ### Run a specific test on BrowserStack
 
-In this section, we will run a single test on Chrome browser on Browserstack. To change test capabilities for this configuration, please refer to the `single` object in `conf.json` file.
+In this section, we will run a single test on Chrome browser on Browserstack. To change test capabilities for this configuration, please refer to the `PlatformOptions` object in `capabilities.yml` file.
 
 -   How to run the test?
 
-    -   To run the default test scenario (e.g. Login Scenario) on your own machine, use the following command:
+    To run the default test scenario (e.g. Login Scenario) on your own machine, use the following command:
 
     .Net Core:
 
     ```
-    dotnet test --filter "TestCategory=Single"
+    dotnet test --filter Category=single
     ```
 
     To run a specific test scenario use the filter tagged to that feature file.
 
     ```
-    dotnet test --filter "TestCategory=<Tag>"
+    dotnet test --filter Category=<Tag>
     ```
 
     where,the argument 'Tag' can be any profile configured with filters in feature files for this repository.
 
-    E.g. Login Feature can be run by Tag "Single", Offer Feature can be run by Tag "Local",Product Feature can be run by Tag "Local_Parallel" ,User Feature can be run by Tag "Mobile",E2E Feature can be run by Tag "Parallel"[About the tests in this repository](#About-the-tests-in-this-repository) section.
+    E.g. "single", "e2e", "login", "user", "offers" and "product"
 
 -   Output
 
-    This run profile executes a single/local/mobile/parallel/local_parallel test on a single/multiple browser on BrowserStack. Please refer to your [BrowserStack dashboard](https://automate.browserstack.com/) for test results.
+    This run profile executes a single test on a single browser on BrowserStack. Please refer to your [BrowserStack dashboard](https://automate.browserstack.com/) for test results.
+
+### Running entire suite in parallel on BrowserStack
+
+-   In this section, we will run the tests in parallel on a single browser OS combination on Browserstack.
+
+    How to run the test?
+
+    To run the entire test suite in parallel on a single BrowserStack browser, just run:
+
+    ```
+    dotnet test
+    ```
+
+    By default, the NUnit runner will only run 10 tests in parallel. This can changed from [AssemblyInfo.cs](browserstack_examples_specflowplus/Properties/AssemblyInfo.cs). You can change the `[assembly: LevelOfParallelism(10)]` tag where you can replace the number 10 with anny number you find appropriate
 
 ### [Web application hosted on internal environment] Running your tests on BrowserStack using BrowserStackLocal
 
@@ -248,8 +259,16 @@ In this section, we will run a single test on Chrome browser on Browserstack. To
     .Net Core:
 
     ```
-    dotnet test --filter "TestCategory=Local"
+    set CAPABILITIES_FILENAME=capabilities-local.yml
+    dotnet test --filter Category=single
     ```
+
+    or 
+    ```set CAPABILITIES_FILENAME=capabilities-local.yml
+    dotnet test --filter Category=<tag>
+    ```
+
+    eg tags are "single", "e2e", "login", "user", "offers" and "product"
 
 -   Output
 
@@ -265,46 +284,11 @@ In this section, we will run a single test on Chrome browser on Browserstack. To
 -   Understand how many parallel sessions you need by using our [Parallel Test Calculator](https://www.browserstack.com/automate/parallel-calculator?ref=github)
 -   For testing public web applications behind IP restriction, [Inbound IP Whitelisting](https://www.browserstack.com/local-testing/inbound-ip-whitelisting) can be enabled with the [BrowserStack Enterprise](https://www.browserstack.com/enterprise) offering
 
-## Run the entire test suite in parallel on a single BrowserStack browser
-
-In this section, we will run the tests in parallel on a single browser on Browserstack. Refer to single object in caps.json file.
-
-How to run the test?
-
-To run the entire test suite in parallel on a single BrowserStack browser, update Tags in all Feature file as @Single and use the following command:
-
-```
-  dotnet test --filter "TestCategory=Single" or dotnet test.
-```
-
-#Output
-
-    This run profile executes the entire test suite in parallel on a single BrowserStack browser. Please refer to your [BrowserStack dashboard](https://automate.browserstack.com/) for test results.
-
-      Note:By Default Login Feature is executed on Single profile,Offer Feature is executed on Local profile,E2E Feature is executed on Parallel profile,User Feature is executed on Mobile profile,Product Feature is executed on Local_Parallel profile.
-
-## Run the entire test suite in parallel on a multiple BrowserStack browser
-
-In this section, we will run the tests in parallel on a single browser on Browserstack. Refer to single object in caps.json file.
-
-How to run the test?
-
-To run the entire test suite in parallel on a multiple BrowserStack browser, update Tags in all Feature file as @Parallel and use the following command:
-
-```
-  dotnet test --filter "TestCategory=Parallel" or dotnet test.
-```
-
-#Output
-
-    This run profile executes the entire test suite in parallel on a multiple BrowserStack browser. Please refer to your [BrowserStack dashboard](https://automate.browserstack.com/) for test results.
-
-      Note:By Default Login Feature is executed on Single profile,Offer Feature is executed on Local profile,E2E Feature is executed on Parallel profile,User Feature is executed on Mobile profile,Product Feature is executed on Local_Parallel profile.
-
 ## Observations
 
--If Test are skipped, please check for other instances of .Net Host & BrowserstackLocal running in background and terminate the running instances explicity.
+- If Test are skipped, please check for other instances of .Net Host & BrowserstackLocal running in background and terminate the running instances explicity.
 
 ## Open Issues
 
--When running all the tests together, there is some flakiness observed and some Test might get fail.
+- When running all the tests together, there is some flakiness observed and some Test might get fail.
+- Please specify the binary path to the local options when using BrowserStack Local. You can find more details about it [here](https://www.nuget.org/packages/BrowserStackLocal/)
