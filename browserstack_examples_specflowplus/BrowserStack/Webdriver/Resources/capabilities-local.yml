@@ -6,6 +6,8 @@ CloudDriverConfig:
   Key:
   LocalTunnel:
     IsEnabled: true
+    LocalOptions:
+      binarypath: /enter/a/valid/path/to/binary
   CommonCapabilities:
     BStackOptions:
       projectName: BrowserStack Examples Specflow

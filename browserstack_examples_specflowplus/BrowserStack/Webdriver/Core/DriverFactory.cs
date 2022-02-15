@@ -165,7 +165,7 @@ namespace BrowserStack.WebDriver.Core
 
 			if (IsLocal)
 			{
-				browserstackOptions.Add("localIdentifier", LocalFactory.GetInstance().GetLocalIdentifier());
+				browserstackOptions.Add("localIdentifier", LocalFactory.GetInstance().GetLocalIdentifier().ToString());
 			}
 
 			object build = null;
