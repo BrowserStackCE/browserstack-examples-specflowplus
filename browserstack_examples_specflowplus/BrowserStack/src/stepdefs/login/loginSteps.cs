@@ -1,7 +1,6 @@
 using TechTalk.SpecFlow;
 //using SpecflowBrowserStack.Drivers;
 using OpenQA.Selenium;
-using BrowserStack.App;
 using BrowserStack.WebDriver.Core;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -13,7 +12,7 @@ using SpecflowBrowserStack.src.stepdefs;
 namespace SpecflowBrowserStack.Steps
 {
 	[Binding]
-	public class loginSteps : WebDriverTestRunner
+	public class loginSteps
 	{
 		private readonly IWebDriver _driver;
 		private static bool result;

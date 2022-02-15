@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using System;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Chrome;
-using BrowserStack.App;
+using BrowserStack;
 using NUnit.Framework;
 using SpecflowBrowserStack.src.stepdefs;
 
