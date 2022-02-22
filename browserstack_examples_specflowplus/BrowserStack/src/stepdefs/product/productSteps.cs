@@ -16,7 +16,7 @@ namespace SpecflowBrowserStack.Steps
 
 		public ProductSteps()
 		{
-			_driver = Hooks.threadLocalDriver.Value;
+			_driver = Hooks.ThreadLocalDriver.Value;
 			wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
 		}
 		[Given(@"I navigate to website locally")]

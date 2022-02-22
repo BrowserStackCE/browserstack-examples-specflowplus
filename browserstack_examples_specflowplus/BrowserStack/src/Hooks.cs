@@ -15,7 +15,7 @@ namespace SpecflowBrowserStack.src.stepdefs
 		private static FeatureContext _featureContext;
 		private static ScenarioContext _scenarioContext;
 
-		public static ThreadLocal<IWebDriver> threadLocalDriver = new ThreadLocal<IWebDriver>();
+		public static ThreadLocal<IWebDriver> ThreadLocalDriver = new ThreadLocal<IWebDriver>();
 		private static readonly ILog log = LogManager.GetLogger(typeof(Hooks));
 
 		public static DriverOptions GetWebDriverObject()
@@ -71,26 +71,26 @@ namespace SpecflowBrowserStack.src.stepdefs
 
 		protected static void SetTestName(String name)
 		{
-			((IJavaScriptExecutor)threadLocalDriver.Value).ExecuteScript("browserstack_executor: {\"action\": \"setSessionName\", \"arguments\": {\"name\":\"" + name + "\" }}");
+			((IJavaScriptExecutor)ThreadLocalDriver.Value).ExecuteScript("browserstack_executor: {\"action\": \"setSessionName\", \"arguments\": {\"name\":\"" + name + "\" }}");
 		}
 
 		protected static void MarkTestStatus()
 		{
 			if (TestContext.CurrentContext.Result.FailCount == 0)
 			{
-				((IJavaScriptExecutor)threadLocalDriver.Value).ExecuteScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\":\"passed\", \"reason\": \"All " + TestContext.CurrentContext.Result.PassCount + " test(s) completed successfully.\"}}");
+				((IJavaScriptExecutor)ThreadLocalDriver.Value).ExecuteScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\":\"passed\", \"reason\": \"All " + TestContext.CurrentContext.Result.PassCount + " test(s) completed successfully.\"}}");
 			}
 			else
 			{
-				((IJavaScriptExecutor)threadLocalDriver.Value).ExecuteScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\":\"failed\", \"reason\": \"Atleast 1 assertion failed\"}}");
+				((IJavaScriptExecutor)ThreadLocalDriver.Value).ExecuteScript("browserstack_executor: {\"action\": \"setSessionStatus\", \"arguments\": {\"status\":\"failed\", \"reason\": \"Atleast 1 assertion failed\"}}");
 			}
 		}
 
 		protected static void Shutdown()
 		{
-			if (threadLocalDriver.IsValueCreated)
+			if (ThreadLocalDriver.IsValueCreated)
 			{
-				threadLocalDriver.Value.Quit();
+				ThreadLocalDriver.Value.Quit();
 			}
 
 		}
@@ -98,10 +98,10 @@ namespace SpecflowBrowserStack.src.stepdefs
 		protected static IWebDriver GetDriver(DriverOptions driverOptions)
 		{
 			DriverFactory webDriverFactory = DriverFactory.GetInstance();
-			threadLocalDriver.Value = webDriverFactory.CreateRemoteWebDriver(driverOptions);
+			ThreadLocalDriver.Value = webDriverFactory.CreateRemoteWebDriver(driverOptions);
 
 
-			return threadLocalDriver.Value;
+			return ThreadLocalDriver.Value;
 		}
 	}
 }

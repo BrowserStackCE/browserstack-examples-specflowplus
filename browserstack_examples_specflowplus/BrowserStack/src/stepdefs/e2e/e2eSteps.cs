@@ -18,7 +18,7 @@ namespace SpecflowBrowserStack.Steps
 
 		public E2eSteps()
 		{
-			_driver = Hooks.threadLocalDriver.Value;
+			_driver = Hooks.ThreadLocalDriver.Value;
 			wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
 		}
 

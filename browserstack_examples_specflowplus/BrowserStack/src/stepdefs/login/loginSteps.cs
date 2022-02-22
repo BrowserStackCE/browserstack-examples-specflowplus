@@ -17,7 +17,7 @@ namespace SpecflowBrowserStack.Steps
 
 		public LoginSteps()
 		{
-			_driver = Hooks.threadLocalDriver.Value;
+			_driver = Hooks.ThreadLocalDriver.Value;
 			wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
 		}
 
