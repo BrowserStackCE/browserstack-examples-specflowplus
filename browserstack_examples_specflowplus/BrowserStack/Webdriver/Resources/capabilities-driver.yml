@@ -1,0 +1,8 @@
+DriverType: OnPremDriver
+BaseUrl: https://bstackdemo.com
+OnPremDriverConfig:
+  Platforms:
+    - SessionCapabilities:
+        PlatformOptions: 
+          BrowserVersion: latest
+          Browser: Chrome
