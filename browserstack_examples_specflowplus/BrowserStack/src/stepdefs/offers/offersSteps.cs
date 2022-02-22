@@ -3,21 +3,19 @@ using OpenQA.Selenium;
 using System;
 using BrowserStack.WebDriver.Core;
 using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium.Chrome;
-//using SeleniumExtras.WaitHelpers;
 using NUnit.Framework;
 using SpecflowBrowserStack.src.stepdefs;
 
 namespace SpecflowBrowserStack.Steps
 {
 	[Binding]
-	public class offersSteps
+	public class OffersSteps
 	{
 		private readonly IWebDriver _driver;
 		private static bool result;
 		WebDriverWait wait;
 
-		public offersSteps(ChromeOptions driverOptions)
+		public OffersSteps()
 		{
 			_driver = Hooks.threadLocalDriver.Value;
 			wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));

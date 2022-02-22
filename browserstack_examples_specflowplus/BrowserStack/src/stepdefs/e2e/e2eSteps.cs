@@ -3,22 +3,20 @@ using OpenQA.Selenium;
 using System;
 using BrowserStack.WebDriver.Core;
 using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium.Chrome;
-//using SeleniumExtras.WaitHelpers;
 using NUnit.Framework;
 using SpecflowBrowserStack.src.stepdefs;
 
 namespace SpecflowBrowserStack.Steps
 {
 	[Binding]
-	public class e2eSteps
+	public class E2eSteps
 
 	{
 		private readonly IWebDriver _driver;
 		private bool result;
 		WebDriverWait wait;
 
-		public e2eSteps()
+		public E2eSteps()
 		{
 			_driver = Hooks.threadLocalDriver.Value;
 			wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));

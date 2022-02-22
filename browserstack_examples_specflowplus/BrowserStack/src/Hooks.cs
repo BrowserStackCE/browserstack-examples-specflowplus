@@ -1,23 +1,11 @@
-﻿using BoDi;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 using TechTalk.SpecFlow;
 using BrowserStack.WebDriver.Core;
 using log4net;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using System.Threading;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using BrowserStack.WebDriver.Core;
-using log4net;
-using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 
 namespace SpecflowBrowserStack.src.stepdefs
 {
@@ -28,7 +16,6 @@ namespace SpecflowBrowserStack.src.stepdefs
 		private static ScenarioContext _scenarioContext;
 
 		public static ThreadLocal<IWebDriver> threadLocalDriver = new ThreadLocal<IWebDriver>();
-		//protected IWebDriver driver;
 		private static readonly ILog log = LogManager.GetLogger(typeof(Hooks));
 
 		public static DriverOptions GetWebDriverObject()
@@ -42,7 +29,6 @@ namespace SpecflowBrowserStack.src.stepdefs
 			{
 				fixtureArgs = webDriverFactory.CreateRemoteWebCapabilities(platform);
 				log.Info(("Initialising driver with capabilities : {}", fixtureArgs));
-
 			}
 
 			return fixtureArgs;
@@ -54,33 +40,6 @@ namespace SpecflowBrowserStack.src.stepdefs
 			_scenarioContext = scenarioContext;
 		}
 
-		[BeforeTestRun]
-		public static void InitializeReport()
-		{
-			//Initialize Extent report before test starts
-
-		}
-
-		[AfterTestRun]
-		public static void TearDownReport()
-		{
-			//Flush report once test completes
-
-		}
-
-		[BeforeFeature]
-		public static void BeforeFeature(FeatureContext featureContext)
-		{
-			//Create dynamic feature name
-
-		}
-
-		[AfterStep]
-		public void InsertReportingSteps()
-		{
-			// use for after hooks
-		}
-
 
 		[BeforeScenario]
 		public static void Initialize(ScenarioContext scenarioContext)
@@ -89,8 +48,6 @@ namespace SpecflowBrowserStack.src.stepdefs
 			GetDriver(GetWebDriverObject());
 
 			SetTestName(scenarioContext.ScenarioInfo.Title);
-			//Create dynamic scenario name
-
 		}
 
 
@@ -109,9 +66,6 @@ namespace SpecflowBrowserStack.src.stepdefs
 			{
 				Shutdown();
 			}
-
-
-			//Create dynamic scenario name
 
 		}
 

@@ -2,20 +2,19 @@ using TechTalk.SpecFlow;
 using OpenQA.Selenium;
 using System;
 using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium.Chrome;
 using NUnit.Framework;
 using SpecflowBrowserStack.src.stepdefs;
 
 namespace SpecflowBrowserStack.Steps
 {
 	[Binding]
-	public class productSteps
+	public class ProductSteps
 	{
 		private readonly IWebDriver _driver;
 		private static bool result;
 		WebDriverWait wait;
 
-		public productSteps()
+		public ProductSteps()
 		{
 			_driver = Hooks.threadLocalDriver.Value;
 			wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));

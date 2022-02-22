@@ -1,24 +1,21 @@
 using TechTalk.SpecFlow;
-//using SpecflowBrowserStack.Drivers;
 using OpenQA.Selenium;
 using BrowserStack.WebDriver.Core;
 using OpenQA.Selenium.Support.UI;
 using System;
-//using SeleniumExtras.WaitHelpers;
 using NUnit.Framework;
-using OpenQA.Selenium.Chrome;
 using SpecflowBrowserStack.src.stepdefs;
 
 namespace SpecflowBrowserStack.Steps
 {
 	[Binding]
-	public class loginSteps
+	public class LoginSteps
 	{
 		private readonly IWebDriver _driver;
 		private static bool result;
 		WebDriverWait wait;
 
-		public loginSteps()
+		public LoginSteps()
 		{
 			_driver = Hooks.threadLocalDriver.Value;
 			wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));

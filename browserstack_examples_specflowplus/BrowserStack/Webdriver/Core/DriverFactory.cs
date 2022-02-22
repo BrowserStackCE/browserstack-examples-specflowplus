@@ -9,7 +9,6 @@ using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
-using System.Text.Json;
 
 namespace BrowserStack.WebDriver.Core
 {
@@ -83,8 +82,6 @@ namespace BrowserStack.WebDriver.Core
 				capabilitiesConfig = DEFAULT_CAPABILITIES_FILE;
 
 			}
-
-			//WebDriverConfiguration webDriverConfiguration = deserializer.Deserialize<WebDriverConfiguration>(File.ReadAllText(Directory.GetCurrentDirectory() + CAPABILITIES_DIR + capabilitiesConfig));
 			WebDriverConfiguration webDriverConfiguration = deserializer.Deserialize<WebDriverConfiguration>(File.ReadAllText(Directory.GetCurrentDirectory() + CAPABILITIES_DIR + capabilitiesConfig));
 
 			return webDriverConfiguration;
@@ -213,13 +210,11 @@ namespace BrowserStack.WebDriver.Core
 
 		private DriverOptions CreateOnPremGridWebDriver(Platform platform)
 		{
-
 			throw new NotImplementedException("On Prem Grid IWebDriver driver is not yet implemented");
 		}
 
 		private DriverOptions CreateOnPremWebCapabilities(Platform platform)
 		{
-
 			throw new NotImplementedException("On Prem IWebDriver driver is not yet implemented");
 		}
 	}
