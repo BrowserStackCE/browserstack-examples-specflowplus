@@ -38,7 +38,7 @@ parallel-local
 				if(TEST_TYPE == "single"){
 					sh returnStatus:true,script: '''
 						cd test
-						dotnet test --filter Category=single
+						/usr/local/bin/dotnet test --filter Category=single
 					'''
 				} else if(TEST_TYPE == "single-local") {
 					sh returnStatus:true,script: '''
