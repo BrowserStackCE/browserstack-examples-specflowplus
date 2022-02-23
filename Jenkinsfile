@@ -37,14 +37,14 @@ parallel-local
 			browserstack(credentialsId: "${params.BROWSERSTACK_USERNAME}") {
 				if(TEST_TYPE == "single"){
 					sh returnStatus:true,script: '''
-						cd test
+						cd test/browserstack_examples_specflowplus
 						/usr/local/bin/dotnet build
 						/usr/local/bin/dotnet restore
 						/usr/local/bin/dotnet test --filter Category=single
 					'''
 				} else if(TEST_TYPE == "single-local") {
 					sh returnStatus:true,script: '''
-						cd test
+						cd test/browserstack_examples_specflowplus
 						export CAPABILITIES_FILENAME=capabilities-local.yml
 						/usr/local/bin/dotnet build
 						/usr/local/bin/dotnet restore
@@ -52,7 +52,7 @@ parallel-local
 					'''
 				} else if(TEST_TYPE == "parallel-local"){
 					sh returnStatus:true,script: '''
-						cd test
+						cd test/browserstack_examples_specflowplus
 						export CAPABILITIES_FILENAME=capabilities-local.yml
 						/usr/local/bin/dotnet build
 						/usr/local/bin/dotnet restore
@@ -60,7 +60,7 @@ parallel-local
 					'''
 				} else {
 					sh returnStatus:true,script: '''
-						cd test
+						cd test/browserstack_examples_specflowplus
 						/usr/local/bin/dotnet build
 						/usr/local/bin/dotnet restore
 						/usr/local/bin/dotnet test
