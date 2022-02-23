@@ -14,7 +14,7 @@ parallel
 single-local
 parallel-local
 ''',
-					defaultChoice: 'bstack-parallel'
+					defaultChoice: 'parallel'
 				],
 				description: 'Select the test you would like to run',
 				editable: false,
@@ -44,18 +44,18 @@ parallel-local
 					sh returnStatus:true,script: '''
 						cd test
 						export CAPABILITIES_FILENAME=capabilities-local.yml
-						dotnet test --filter Category=single
+						/usr/local/bin/dotnet test --filter Category=single
 					'''
 				} else if(TEST_TYPE == "parallel-local"){
 					sh returnStatus:true,script: '''
 						cd test
 						export CAPABILITIES_FILENAME=capabilities-local.yml
-						dotnet test
+						/usr/local/bin/dotnet test
 					'''
 				} else {
 					sh returnStatus:true,script: '''
 						cd test
-						dotnet test
+						/usr/local/bin/dotnet test
 					'''
 				}
 			}
