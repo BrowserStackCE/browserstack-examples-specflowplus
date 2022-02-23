@@ -38,23 +38,31 @@ parallel-local
 				if(TEST_TYPE == "single"){
 					sh returnStatus:true,script: '''
 						cd test
+						/usr/local/bin/dotnet build
+						/usr/local/bin/dotnet restore
 						/usr/local/bin/dotnet test --filter Category=single
 					'''
 				} else if(TEST_TYPE == "single-local") {
 					sh returnStatus:true,script: '''
 						cd test
 						export CAPABILITIES_FILENAME=capabilities-local.yml
+						/usr/local/bin/dotnet build
+						/usr/local/bin/dotnet restore
 						/usr/local/bin/dotnet test --filter Category=single
 					'''
 				} else if(TEST_TYPE == "parallel-local"){
 					sh returnStatus:true,script: '''
 						cd test
 						export CAPABILITIES_FILENAME=capabilities-local.yml
+						/usr/local/bin/dotnet build
+						/usr/local/bin/dotnet restore
 						/usr/local/bin/dotnet test
 					'''
 				} else {
 					sh returnStatus:true,script: '''
 						cd test
+						/usr/local/bin/dotnet build
+						/usr/local/bin/dotnet restore
 						/usr/local/bin/dotnet test
 					'''
 				}
