@@ -32,26 +32,26 @@ parallel-local
 				sh returnStatus:true, script:'''
 					mkdir -p browserstack_examples_specflowplus/bin/Debug/netcoreapp3.1/BrowserStack/Webdriver/Resources
 					cp -r browserstack_examples_specflowplus/BrowserStack/Webdriver/Resources/* browserstack_examples_specflowplus/bin/Debug/netcoreapp3.1/BrowserStack/Webdriver/Resources/
-					/usr/local/bin/dotnet build
+					/bin/dotnet build
 				'''
 			
 				if(TEST_TYPE == "single"){
 					sh returnStatus:true,script: '''
-						/usr/local/bin/dotnet test --filter Category=single
+						/bin/dotnet test --filter Category=single
 					'''
 				} else if(TEST_TYPE == "single-local") {
 					sh returnStatus:true,script: '''
 						export CAPABILITIES_FILENAME=capabilities-local.yml
-						/usr/local/bin/dotnet test --filter Category=single
+						/bin/dotnet test --filter Category=single
 					'''
 				} else if(TEST_TYPE == "parallel-local"){
 					sh returnStatus:true,script: '''
 						export CAPABILITIES_FILENAME=capabilities-local.yml
-						/usr/local/bin/dotnet test
+						/bin/dotnet test
 					'''
 				} else {
 					sh returnStatus:true,script: '''
-						/usr/local/bin/dotnet test
+						/bin/dotnet test
 					'''
 				}
 			}
