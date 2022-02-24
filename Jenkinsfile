@@ -27,42 +27,30 @@ parallel-local
 			checkout scm
 		}
 
-		stage('Pull from Github') {
-			dir('test') {
-				git branch: 'nunit_runner_development', changelog: false, poll: false, url: 'https://github.com/browserstack/browserstack-examples-specflowplus.git'
-			}
-		}
-
 		stage('Run Test(s)') {
 			browserstack(credentialsId: "${params.BROWSERSTACK_USERNAME}") {
+				sh returnStatus:true, script:'''
+					mkdir -p browserstack_examples_specflowplus/bin/Debug/netcoreapp3.1/BrowserStack/Webdriver/Resources
+					cp -r browserstack_examples_specflowplus/BrowserStack/Webdriver/Resources/* browserstack_examples_specflowplus/bin/Debug/netcoreapp3.1/BrowserStack/Webdriver/Resources/
+					/usr/local/bin/dotnet build
+				'''
+			
 				if(TEST_TYPE == "single"){
 					sh returnStatus:true,script: '''
-						cd test/browserstack_examples_specflowplus
-						/usr/local/bin/dotnet build
-						/usr/local/bin/dotnet restore
 						/usr/local/bin/dotnet test --filter Category=single
 					'''
 				} else if(TEST_TYPE == "single-local") {
 					sh returnStatus:true,script: '''
-						cd test/browserstack_examples_specflowplus
 						export CAPABILITIES_FILENAME=capabilities-local.yml
-						/usr/local/bin/dotnet build
-						/usr/local/bin/dotnet restore
 						/usr/local/bin/dotnet test --filter Category=single
 					'''
 				} else if(TEST_TYPE == "parallel-local"){
 					sh returnStatus:true,script: '''
-						cd test/browserstack_examples_specflowplus
 						export CAPABILITIES_FILENAME=capabilities-local.yml
-						/usr/local/bin/dotnet build
-						/usr/local/bin/dotnet restore
 						/usr/local/bin/dotnet test
 					'''
 				} else {
 					sh returnStatus:true,script: '''
-						cd test/browserstack_examples_specflowplus
-						/usr/local/bin/dotnet build
-						/usr/local/bin/dotnet restore
 						/usr/local/bin/dotnet test
 					'''
 				}
