@@ -21,7 +21,7 @@ namespace BrowserStack.WebDriver.Core
 		private readonly string BROWSERSTACK_ACCESS_KEY = "BROWSERSTACK_ACCESS_KEY";
 		private readonly string BUILD_ID = "BROWSERSTACK_BUILD_NAME";
 		private readonly string DEFAULT_BUILD_NAME = "browserstack_examples_specflow";
-		public readonly string CAPABILITIES_DIR = "/Browserstack/Webdriver/Resources/";
+		public readonly string CAPABILITIES_DIR = "/BrowserStack/Webdriver/Resources/";
 		private readonly WebDriverConfiguration WebDriverConfiguration;
 		private readonly string DefaultBuildSuffix;
 		private readonly bool IsLocal;

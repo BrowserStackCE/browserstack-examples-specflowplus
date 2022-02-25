@@ -14,7 +14,7 @@ parallel
 single-local
 parallel-local
 ''',
-					defaultChoice: 'bstack-parallel'
+					defaultChoice: 'parallel'
 				],
 				description: 'Select the test you would like to run',
 				editable: false,
@@ -27,35 +27,55 @@ parallel-local
 			checkout scm
 		}
 
-		stage('Pull from Github') {
-			dir('test') {
-				git branch: 'nunit_runner_development', changelog: false, poll: false, url: 'https://github.com/browserstack/browserstack-examples-specflowplus.git'
-			}
-		}
-
 		stage('Run Test(s)') {
 			browserstack(credentialsId: "${params.BROWSERSTACK_USERNAME}") {
+				sh returnStatus:true, script:'''
+					mkdir -p browserstack_examples_specflowplus/bin/Debug/netcoreapp3.1/BrowserStack/Webdriver/Resources
+					echo  'DriverType: CloudDriver
+BaseUrl: http://localhost:3000
+CloudDriverConfig:
+  HubUrl: https://hub-cloud.browserstack.com/wd/hub
+  User:
+  Key:
+  LocalTunnel:
+    IsEnabled: true
+    LocalOptions:
+      binarypath: /var/lib/jenkins/.browserstack/BrowserStackLocal
+  CommonCapabilities:
+    BStackOptions:
+      projectName: BrowserStack Examples Specflow
+      buildName: browserstack-examples-specflow
+      debug: true
+      networkLogs: true
+      os: Windows
+      osVersion: "11"
+      local: true
+  Platforms:
+    - SessionCapabilities:
+        PlatformOptions: 
+          BrowserVersion: latest
+'	> browserstack_examples_specflowplus/BrowserStack/Webdriver/Resources/capabilities-local.yml
+					cp -r browserstack_examples_specflowplus/BrowserStack/Webdriver/Resources/* browserstack_examples_specflowplus/bin/Debug/netcoreapp3.1/BrowserStack/Webdriver/Resources/
+					/bin/dotnet build
+				'''
+			
 				if(TEST_TYPE == "single"){
 					sh returnStatus:true,script: '''
-						cd test
-						dotnet test --filter Category=single
+						/bin/dotnet test --filter Category=single
 					'''
 				} else if(TEST_TYPE == "single-local") {
 					sh returnStatus:true,script: '''
-						cd test
 						export CAPABILITIES_FILENAME=capabilities-local.yml
-						dotnet test --filter Category=single
+						/bin/dotnet test --filter Category=single
 					'''
 				} else if(TEST_TYPE == "parallel-local"){
 					sh returnStatus:true,script: '''
-						cd test
 						export CAPABILITIES_FILENAME=capabilities-local.yml
-						dotnet test
+						/bin/dotnet test
 					'''
 				} else {
 					sh returnStatus:true,script: '''
-						cd test
-						dotnet test
+						/bin/dotnet test
 					'''
 				}
 			}
