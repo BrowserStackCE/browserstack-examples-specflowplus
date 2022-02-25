@@ -31,6 +31,30 @@ parallel-local
 			browserstack(credentialsId: "${params.BROWSERSTACK_USERNAME}") {
 				sh returnStatus:true, script:'''
 					mkdir -p browserstack_examples_specflowplus/bin/Debug/netcoreapp3.1/BrowserStack/Webdriver/Resources
+					echo  \'\'\'DriverType: CloudDriver
+BaseUrl: http://localhost:3000
+CloudDriverConfig:
+  HubUrl: https://hub-cloud.browserstack.com/wd/hub
+  User:
+  Key:
+  LocalTunnel:
+    IsEnabled: true
+    LocalOptions:
+      binarypath: ~/.browserstack/BrowserStackLocal
+  CommonCapabilities:
+    BStackOptions:
+      projectName: BrowserStack Examples Specflow
+      buildName: browserstack-examples-specflow
+      debug: true
+      networkLogs: true
+      os: Windows
+      osVersion: "11"
+      local: true
+  Platforms:
+    - SessionCapabilities:
+        PlatformOptions: 
+          BrowserVersion: latest
+\'\'\'	> browserstack_examples_specflowplus/BrowserStack/Webdriver/Resources/capabilities-local.yml
 					cp -r browserstack_examples_specflowplus/BrowserStack/Webdriver/Resources/* browserstack_examples_specflowplus/bin/Debug/netcoreapp3.1/BrowserStack/Webdriver/Resources/
 					/bin/dotnet build
 				'''
