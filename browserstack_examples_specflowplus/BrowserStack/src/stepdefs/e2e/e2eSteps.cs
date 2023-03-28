@@ -1,10 +1,10 @@
 using TechTalk.SpecFlow;
 using OpenQA.Selenium;
 using System;
-using BrowserStack.WebDriver.Core;
 using OpenQA.Selenium.Support.UI;
 using NUnit.Framework;
 using SpecflowBrowserStack.src.stepdefs;
+using SeleniumExtras.WaitHelpers;
 
 namespace SpecflowBrowserStack.Steps
 {
@@ -25,7 +25,7 @@ namespace SpecflowBrowserStack.Steps
 		[Given(@"I navigate to website bogus")]
 		public void GivenINavigatedTowebsite()
 		{
-			_driver.Navigate().GoToUrl(DriverFactory.GetInstance().GetBaseUrl());
+			_driver.Navigate().GoToUrl("https://bstackdemo.com");
 		}
 
 		[Then(@"I click on Sign In link bogus")]
@@ -37,7 +37,8 @@ namespace SpecflowBrowserStack.Steps
 		[When(@"I type ""(.*)"" in username")]
 		public void WhenITypeInUsername(string username)
 		{
-			_driver.FindElement(By.Id("react-select-2-input")).SendKeys(username);
+            wait.Until(ExpectedConditions.ElementExists(By.Id("react-select-2-input")));
+            _driver.FindElement(By.Id("react-select-2-input")).SendKeys(username);
 			_driver.FindElement(By.Id("react-select-2-input")).SendKeys(Keys.Enter);
 		}
 

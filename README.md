@@ -1,14 +1,12 @@
 ![Logo](https://www.browserstack.com/images/static/header-logo.jpg)
 
-# BrowserStack Examples SpecflowPlus <a href="https://specflow.org/"><img src="https://www.specflow.org/wp-content/uploads/2016/07/SF_Logo.png" alt="Specflow" height="22" alt="Behavior Driven Development for .NET" /></a>
+# BrowserStack Examples Specflow <a href="https://specflow.org/"><img src="https://www.specflow.org/wp-content/uploads/2016/07/SF_Logo.png" alt="Specflow" height="22" alt="Behavior Driven Development for .NET" /></a>
 
 ## Introduction
 
-SpecFlow is the #1 .NET open source framework for Behavior Driven Development, Acceptance Test Driven Development and Specification by Example. With over 10m downloads on NuGet, SpecFlow is trusted by teams around the world.
+SpecFlow is an open source framework for Behavior Driven Development, Acceptance Test Driven Development and Specification by Example.
 
-This BrowserStack Example repository demonstrates a #{ Selenium test / Cypress / Puppeteer / Other } framework written in Cucumber and Junit 5 with parallel testing capabilities. The #{ Selenium test / Cypress / Puppeteer / Other } test scripts are written for the open source [BrowserStack Demo web application](https://bstackdemo.com) ([Github](https://github.com/browserstack/browserstack-demo-app)). This BrowserStack Demo App is an e-commerce web application which showcases multiple real-world user scenarios. The app is bundled with offers data, orders data and products data that contains everything you need to start using the app and run tests out-of-the-box.
-
-The #{ Selenium test / Cypress / Puppeteer / Other } tests are run on different platforms like on-prem, docker and BrowserStack using various run configurations and test capabilities.
+This BrowserStack Example repository demonstrates a Selenium test framework written in Cucumber and NUnit with parallel testing capabilities. The Selenium test scripts are written for the open source [BrowserStack Demo web application](https://bstackdemo.com) ([Github](https://github.com/browserstack/browserstack-demo-app)). This BrowserStack Demo App is an e-commerce web application which showcases multiple real-world user scenarios. The app is bundled with offers data, orders data and products data that contains everything you need to start using the app and run tests out-of-the-box.
 
 ---
 
@@ -42,124 +40,6 @@ This repository contains the following #{ Selenium test} tests:
 | User    | Login as User with existing Orders | This test verifies that existing orders are shown for user: "existing_orders_user" .It is executed in Mobile profile.                                                                                            |
 
 ---
-
-## Test infrastructure environments
-
--   [On Prem](#on-premise-self-hosted)
--   [Docker](#docker)
--   [BrowserStack](#browserstack)
-
----
-
-# On Premise / Self Hosted
-
-This infrastructure points to running the tests on your own machine using a browser (e.g. Chrome) using the browser's driver executables (e.g. ChromeDriver for Chrome). #{ Selenium enables this functionality using WebDriver for many popular browsers.}
-
-## Prerequisites
-
--   For this infrastructure configuration (i.e on-premise), ensure that the ChromeDriver executable is available in the path.
--   ChromeDriver can be downloaded from https://chromedriver.chromium.org/downloads
-
-Note: The ChromeDriver version must match the Chrome browser version on your machine.
-
-## Running Your Tests
-
-### Run a specific test on your own machine
-
--   How to run the test?
-
-    To run the default test scenario (e.g. Login Scenario) on your own machine, use the following command:
-
-    .Net Core:
-
-    ```
-    set CAPABILITIES_FILENAME=capabilities-driver.yml
-    dotnet test --filter Category=single
-    ```
-
--   Output
-
-    This run profile executes a specific test scenario on a single browser instance on your own machine.
-
--   To run a specific test scenario use the filter tagged to that feature file.
-
-    .Net Core:
-
-    ```
-    set CAPABILITIES_FILENAME=capabilities-driver.yml
-    dotnet test --filter Category=<tag>
-    ```
-
-    where, the argument 'Tag' can be any profile configured with filters in feature files for this repository.
-
-    E.g. "single", "e2e", "login", "offers", "product" and "user"
-
--   Output
-
-    This run profile executes the test Feature file sequentially on a single browser, on your own machine.
-
----
-
-# Docker
-
-[Docker](https://docs.docker.com/get-started/overview/) is an open source platform that provides the ability to package and test applications in an isolated environment called containers.
-
-## Prerequisites
-
--   Install and start [Docker](https://docs.docker.com/get-docker/).
--   Note: Docker should be running on the test machine. Ensure Docker Compose is installed as well.
--   Run `docker-compose pull` from the current directory of the repository.
-
-## Running Your Tests
-
-### Run a specific test on the docker infrastructure
-
--   How to run the test?
-
-    -   Start the Docker by running the following command:
-
-    ```
-    docker-compose up -d
-    ```
-
-    To run the default test scenario (e.g. Login Scenario) on your own machine, use the following command:
-
-    .Net Core:
-
-    ```
-    set CAPABILITIES_FILENAME=capabilities-driver.yml
-    dotnet test --filter Category=single
-    ```
-
--   Output
-
-    This run profile executes a specific test scenario on a single browser instance on your personal selenium grid.
-
--   To run a specific test scenario use the filter tagged to that feature file.
-
-    .Net Core:
-
-    ```
-    set CAPABILITIES_FILENAME=capabilities-driver.yml
-    dotnet test --filter Category=<Tag>
-    ```
-
-    where, the argument 'Tag' can be any profile configured with filters in feature files for this repository.
-
-    E.g. "single", "e2e", "login", "user", "offers" and "product"
-
--   Output
-
-    This run profile executes the test Feature file sequentially on a single browser, on your personal selenium grid.
-
-    -   After tests are complete, you can stop the Docker by running the following command:
-
-    ```
-    docker-compose down
-    ```
-
----
-
 # BrowserStack
 
 [BrowserStack](https://browserstack.com) provides instant access to 2,000+ real mobile devices and browsers on a highly reliable cloud infrastructure that effortlessly scales as testing needs grow.
@@ -183,7 +63,7 @@ Note: The ChromeDriver version must match the Chrome browser version on your mac
     set BROWSERSTACK_ACCESS_KEY=<browserstack-access-key>
     ```
 
-    Alternatively, you can also hardcode username and access_key objects in the [capabilities.yml](browserstack_examples_specflowplus/BrowserStack/Webdriver/Resources/capabilities.yml) file.
+    Alternatively, you can also hardcode username and access_key objects in the [browserstack.yml](browserstack_examples_specflowplus/browserstack.yml) file.
 
 Note:
 
@@ -191,13 +71,11 @@ Note:
 
 ## Running Your Tests
 
-### Run a specific test on BrowserStack
-
-In this section, we will run a single test on Chrome browser on Browserstack. To change test capabilities for this configuration, please refer to the `PlatformOptions` object in `capabilities.yml` file.
+In this section, we will run tests on Browserstack. To change test capabilities for this configuration, please refer to the `platforms` object in `browserstack.yml` file.
 
 -   How to run the test?
 
-    To run the default test scenario (e.g. Login Scenario) on your own machine, use the following command:
+    To run a test scenario (e.g. Login Scenario) on your own machine, use the following command:
 
     .Net Core:
 
@@ -215,64 +93,21 @@ In this section, we will run a single test on Chrome browser on Browserstack. To
 
     E.g. "single", "e2e", "login", "user", "offers" and "product"
 
--   Output
+    ---
 
-    This run profile executes a single test on a single browser on BrowserStack. Please refer to your [BrowserStack dashboard](https://automate.browserstack.com/) for test results.
+    To run all the tests, use the following command:
 
-### Running entire suite in parallel on BrowserStack
-
--   In this section, we will run the tests in parallel on a single browser OS combination on Browserstack.
-
-    How to run the test?
-
-    To run the entire test suite in parallel on a single BrowserStack browser, just run:
+    .Net Core:
 
     ```
     dotnet test
     ```
 
-    By default, the NUnit runner will only run 10 tests in parallel. This can changed from [AssemblyInfo.cs](browserstack_examples_specflowplus/Properties/AssemblyInfo.cs). You can change the `[assembly: LevelOfParallelism(10)]` tag where you can replace the number 10 with anny number you find appropriate
-
-### [Web application hosted on internal environment] Running your tests on BrowserStack using BrowserStackLocal
-
-#### Prerequisites
-
--   Clone the [BrowserStack demo application](https://github.com/browserstack/browserstack-demo-app) repository.
-    ```
-    git clone https://github.com/browserstack/browserstack-demo-app
-    ```
--   Please follow the README.md on the BrowserStack demo application repository to install and start the dev server on localhost.
--   In this section, we will run a single test case to test the BrowserStack Demo app hosted on your local machine i.e. localhost. Refer to the `Local` object in `conf.json` file to change test capabilities for this configuration.
--   Note: You may need to provide additional BrowserStackLocal arguments to successfully connect your localhost environment with BrowserStack infrastructure. (e.g if you are behind firewalls, proxy or VPN).
--   Further details for successfully creating a BrowserStackLocal connection can be found here:
-
-    -   [Local Testing with Automate](https://www.browserstack.com/local-testing/automate)
-    -   [BrowserStackLocal C# GitHub](https://github.com/browserstack/browserstack-local-csharp)
-    -   Onces Connection is established user "browserstack.local": "true" in cpabalitilies.
-
-### [Web application hosted on internal environment] Run a specific test on BrowserStack using BrowserStackLocal
-
--   How to run the test?
-
-    -Product Feature can be run by Tag "Local" on a single BrowserStack browser using BrowserStackLocal, use the following command:
-
-    .Net Core:
-
-    ```
-    set CAPABILITIES_FILENAME=capabilities-local.yml
-    dotnet test --filter Category=single
-    ```
-
-    or 
-    ```set CAPABILITIES_FILENAME=capabilities-local.yml
-    dotnet test --filter Category=<tag>
-    ```
-
-    eg tags are "single", "e2e", "login", "user", "offers" and "product"
+    The number of prallels per platform can be configured by changing the value of `parallelsPerPlatform` property in the `browserstack.yml` file.
 
 -   Output
 
-    This run profile executes a single test on an internally hosted web application on a single browser on BrowserStack. Please refer to your BrowserStack dashboard(https://automate.browserstack.com/) for test results.
+    This run profile executes a single test on a single browser on BrowserStack. Please refer to your [BrowserStack dashboard](https://automate.browserstack.com/) for test results.
 
 ## Additional Resources
 
@@ -283,12 +118,3 @@ In this section, we will run a single test on Chrome browser on Browserstack. To
 -   [Using Automate REST API](https://www.browserstack.com/automate/rest-api) to access information about your tests via the command-line interface
 -   Understand how many parallel sessions you need by using our [Parallel Test Calculator](https://www.browserstack.com/automate/parallel-calculator?ref=github)
 -   For testing public web applications behind IP restriction, [Inbound IP Whitelisting](https://www.browserstack.com/local-testing/inbound-ip-whitelisting) can be enabled with the [BrowserStack Enterprise](https://www.browserstack.com/enterprise) offering
-
-## Observations
-
-- If Test are skipped, please check for other instances of .Net Host & BrowserstackLocal running in background and terminate the running instances explicity.
-
-## Open Issues
-
-- When running all the tests together, there is some flakiness observed and some Test might get fail.
-- Please specify the binary path to the local options when using BrowserStack Local. You can find more details about it [here](https://www.nuget.org/packages/BrowserStackLocal/)

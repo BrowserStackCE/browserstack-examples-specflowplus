@@ -2,9 +2,9 @@ using TechTalk.SpecFlow;
 using OpenQA.Selenium;
 using System;
 using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium.Chrome;
 using NUnit.Framework;
 using SpecflowBrowserStack.src.stepdefs;
+using SeleniumExtras.WaitHelpers;
 
 namespace SpecflowBrowserStack.Steps
 {
@@ -23,8 +23,9 @@ namespace SpecflowBrowserStack.Steps
 		[Then(@"I should see no image loaded")]
 		public void ThenIShouldSeeNoImageLoaded()
 		{
-			String src = _driver.FindElement(By.XPath("//img[@alt='iPhone 12']")).GetAttribute("src");
-			Assert.AreEqual("img", src);
+            wait.Until(ExpectedConditions.ElementExists(By.XPath("//img[@alt='iPhone 12']")));
+            String src = _driver.FindElement(By.XPath("//img[@alt='iPhone 12']")).GetAttribute("src");
+			Assert.IsEmpty(src);
 		}
 	}
 }
