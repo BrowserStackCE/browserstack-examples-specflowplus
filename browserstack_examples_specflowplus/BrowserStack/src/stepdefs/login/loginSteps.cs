@@ -1,10 +1,10 @@
 using TechTalk.SpecFlow;
 using OpenQA.Selenium;
-using BrowserStack.WebDriver.Core;
 using OpenQA.Selenium.Support.UI;
 using System;
 using NUnit.Framework;
 using SpecflowBrowserStack.src.stepdefs;
+using SeleniumExtras.WaitHelpers;
 
 namespace SpecflowBrowserStack.Steps
 {
@@ -24,7 +24,7 @@ namespace SpecflowBrowserStack.Steps
 		[Given(@"I navigate to website")]
 		public void GivenINavigatedTowebsite()
 		{
-			_driver.Navigate().GoToUrl(DriverFactory.GetInstance().GetBaseUrl());
+			_driver.Navigate().GoToUrl("https://bstackdemo.com");
 		}
 
 		[Then(@"I click on Sign In link")]

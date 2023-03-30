@@ -1,10 +1,10 @@
 using TechTalk.SpecFlow;
 using OpenQA.Selenium;
 using System;
-using BrowserStack.WebDriver.Core;
 using OpenQA.Selenium.Support.UI;
 using NUnit.Framework;
 using SpecflowBrowserStack.src.stepdefs;
+using SeleniumExtras.WaitHelpers;
 
 namespace SpecflowBrowserStack.Steps
 {
@@ -24,8 +24,8 @@ namespace SpecflowBrowserStack.Steps
 		[Given(@"I navigate to website with mumbai geo-location")]
 		public void GivenINavigateToWebsiteWithMumbaiGeo_Location()
 		{
-			_driver.Navigate().GoToUrl(DriverFactory.GetInstance().GetBaseUrl());
-			((IJavaScriptExecutor)_driver).ExecuteScript("window.navigator.geolocation.getCurrentPosition = function(cb){cb({ coords: {accuracy: 20,altitude: null,altitudeAccuracy: null,heading: null,latitude: 19.043192,longitude: 75.86305240000002,speed: null}}); }");
+			_driver.Navigate().GoToUrl("https://bstackdemo.com");
+			((IJavaScriptExecutor)_driver).ExecuteScript("window.navigator.geolocation.getCurrentPosition = function(cb){cb({ coords: {accuracy: 20,altitude: null,altitudeAccuracy: null,heading: null,latitude: 19,longitude: 72,speed: null}}); }");
 		}
 
 		[Then(@"I click on Offers link")]
