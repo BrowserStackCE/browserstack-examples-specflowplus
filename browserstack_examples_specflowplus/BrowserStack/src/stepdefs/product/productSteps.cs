@@ -19,12 +19,6 @@ namespace SpecflowBrowserStack.Steps
 			_driver = Hooks.ThreadLocalDriver.Value;
 			wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
 		}
-		[Given(@"I navigate to website locally")]
-		public void GivenINavigateToWebsiteLocally()
-		{
-			_driver.Navigate().GoToUrl("http://localhost:3000/");
-		}
-
 
 		[Given(@"I press the Apple Vendor Filter")]
 		public void GivenIPressTheAppleVendorFilter()
